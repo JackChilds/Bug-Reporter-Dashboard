@@ -1,0 +1,24 @@
+{
+    "css": [
+        "css/main.min.css"
+    ],
+    "js": [
+        "js/main.js"
+    ],  
+    "sweetalert2_theme":
+    [
+        "https://cdn.jsdelivr.net/npm/@sweetalert2/theme-default@5.0.8/default.min.css"
+    ],
+    "highlightjs_theme":
+    [
+        "https://cdn.jsdelivr.net/npm/highlight.js@11.3.1/styles/base16/snazzy.css"
+    ],
+    "fonts": [
+        "https://fonts.googleapis.com/css2?family=Roboto+Mono&display=swap"
+    ],
+    "page_style": {
+        "background-color": "#f4f5eb",
+        "color": "#000000",
+        "font-family": "Roboto, sans-serif"
+    }
+}
