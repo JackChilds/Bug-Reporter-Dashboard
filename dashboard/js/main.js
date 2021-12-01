@@ -229,3 +229,34 @@ function tableSearch(input, table) {
         }
     }
 }
+
+function bugPropertyReplace() {
+    var bugProperties = document.querySelectorAll('.bug-property');
+    const regex = /\{\{.*?\}\}/g;
+
+    bugProperties.forEach((e) => {
+        const property = e.innerHTML.match(regex);
+        if (property !== null) {
+            for (let n = 0; n < property.length; n++) {
+                const innerProperty = property[n]
+                .replace('{{', '')
+                .replace('}}', '')
+                .trim();
+                
+                let replacement = null;
+
+                const p = innerProperty.split('.');
+                if (p[0] === 'data') {
+                    let item = bugreport;
+                    for (let i = 1; i < p.length; i++) {
+                        item = item[p[i]];
+                    }
+                    replacement = item;
+                }
+
+                e.innerHTML=e.innerHTML.replace(property[n], replacement);
+            }
+        }
+    });
+
+}
