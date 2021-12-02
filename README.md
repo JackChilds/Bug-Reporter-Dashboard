@@ -19,3 +19,16 @@ A HTML string to be inserted into the report. Wrap bug properties in double curl
 ```
 When referencing bug properties, use the syntax: `{{ data.property.property }}`, make sure you start with `data.` and then use the dot notation to reference the property in the same way you would if taking the bug report object in JS.
 For reference to the properties in the bug report object, see the [bug reporter usage section](https://github.com/JackChilds/Bug-Reporter#usage).
+
+## Sending data to the dashboard through a POST request
+```html
+<form action="path/to/dashboard/" method="post" enctype="multipart/form-data">
+    <!-- Suppress the alert when the bug report is loaded -->
+    <input type="text" name="hide-alert" hidden>
+
+    <!-- Specify preferences.json file (as a url relative to location of dashboard file). If not specified, the dashboard will look for the preferences.json file in the same directory -->
+    <input type="text" name="preferences" value="preferences.json" hidden>
+    <input type="file" name="report">
+    <input type="submit" value="Go to dashboard">
+</form>
+```
