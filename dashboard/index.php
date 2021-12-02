@@ -2,14 +2,27 @@
 
 $bug_report_file;
 
-function readPreferences() {
+function readPreferences($url) {
     // open the preferences file and read from it, then parse as json
-    $preferencesFile = fopen("preferences.json", "r");
-    $preferences = fread($preferencesFile, filesize("preferences.json"));
+    $preferencesFile = fopen($url, "r");
+    $preferences = fread($preferencesFile, filesize($url));
     fclose($preferencesFile);
     return json_decode($preferences, true);
 }
-$preferences = readPreferences();
+
+if (!isset($_POST['preferences']) || empty($_POST['preferences'])) {
+    if (file_exists("preferences.json")) {
+        $preferences = readPreferences("preferences.json");
+    } else {
+        die('Preferences file not found');
+    }
+} else {
+    if (file_exists($_POST['preferences'])) {
+        $preferences = readPreferences($_POST['preferences']);
+    } else {
+        die('Custom preferences file not found');
+    }
+}
 
 if(!file_exists($_FILES['report']['tmp_name']) || !is_uploaded_file($_FILES['report']['tmp_name'])) {
     header('Location: ' . $preferences['error']['file-not-sent']);
@@ -25,6 +38,12 @@ if(!file_exists($_FILES['report']['tmp_name']) || !is_uploaded_file($_FILES['rep
     }
 }
 
+if (isset($_POST['hide-alert'])) {
+    $hide_alert = 1;
+} else {
+    $hide_alert = 0;
+}
+
 ?>
 
 <!DOCTYPE html>
@@ -32,7 +51,10 @@ if(!file_exists($_FILES['report']['tmp_name']) || !is_uploaded_file($_FILES['rep
 <head>
     <!-- The Bug Report File -->
     <script>
-        const bug_report_file = JSON.parse(atob('<?php echo $bug_report_file; ?>'));
+        let bugreport = JSON.parse(atob('<?php echo $bug_report_file; ?>'));
+        bugreport.filename = atob('<?php echo base64_encode($_FILES['report']['name']); ?>');
+        const hide_alert = <?php echo $hide_alert; ?>;
+        
         
     </script>
 
@@ -82,20 +104,13 @@ if(!file_exists($_FILES['report']['tmp_name']) || !is_uploaded_file($_FILES['rep
         <div class="row p-4 shadow-sm rounded">
             <div class="col">
                 <h1 class="display-6"><?php echo htmlspecialchars($preferences['preferences']['page-title']); ?></h1>
-                <p class="text-muted cursor-pointer" onclick="linkToProfile()"><?php echo htmlspecialchars($preferences['preferences']['title-secondary-text']) ?></p>
-                <button class="btn btn-success" onclick="uploadBugReport()">Upload Bug Report</button>
+                <p class="text-muted"><?php echo htmlspecialchars($preferences['preferences']['title-secondary-text']) ?></p>
             </div>
             <div class="col text-end">
                 <?php 
                     // company name
                     echo '<span class="company-name" style="font-family: ' . $preferences['preferences']['company-name']['font-family'] . '; font-size: ' . $preferences['preferences']['company-name']['font-size'] . ';">' . htmlspecialchars($preferences['preferences']['company-name']['text']) . '</span>';
                 ?>
-            </div>
-        </div>
-
-        <div class="row pt-1" id="please-upload-notice">
-            <div class="col p-4 mt-4 mb-4 shadow rounded pos-relative">
-                <span class="center">Please upload a bug report to view it here.</span>
             </div>
         </div>
 
@@ -237,5 +252,20 @@ if(!file_exists($_FILES['report']['tmp_name']) || !is_uploaded_file($_FILES['rep
             echo '<script src="' . $file . '"></script>';
         }
     ?>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // initialise bug report
+            if (hide_alert === 0) {
+                Swal.fire({
+                    title: 'Bug Report Loaded',
+                    icon: 'success',
+                    timer: 1800
+                })
+            }
+            bugreportChanged();
+            bugreportContainer.style.display = 'block';
+        })
+    </script>
 </body>
 </html>

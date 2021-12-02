@@ -1,52 +1,14 @@
-let bugreport = {};
-/** 
- * additionalInfo
- * consoleOutput
- * cookies
- * dateTime
- * html
- * localStorage
- * navigatorInfo
- * pageSnapshot
- * screenInfo
- * sessionStorage
- * windowLocation
-**/ 
+/*
+* 
+* Bug Reporter Dashboard
+* Apache 2.0 License
+* By Jack Childs 2021
+* 
+*/
 
-function linkToProfile() {
-    window.open('https://github.com/JackChilds');
-}
-
-const pleaseUploadNotice = document.querySelector('#please-upload-notice');
 const bugreportContainer = document.querySelector('#bugreport-container');
 const bugreportViewer = document.querySelector('#bugreport-viewer');
 
-function uploadBugReport() {
-    // sweetalert2 popup that asks the user for the bug report JSON file
-    Swal.fire({
-        title: 'Upload Bug Report',
-        html: '<input id="bugreport_file_input" type="file" accept="application/json" class="form-control">',
-    }).then ((r) => {
-        if (r.isConfirmed && document.querySelector('#bugreport_file_input').files.length > 0) {
-            // read file as text with file reader API
-            const file = document.querySelector('#bugreport_file_input').files[0];
-
-            const reader = new FileReader();
-            reader.onload = (e) => {
-                // parse the JSON
-                bugreport = JSON.parse(e.target.result);
-
-                bugreport['filename'] = file.name;
-
-                pleaseUploadNotice.style.display = 'none';
-                bugreportContainer.style.display = 'block';
-                bugreportChanged();
-
-            }
-            reader.readAsText(file);
-        }
-    })
-}
 
 function openImageModal() {
     Swal.fire({

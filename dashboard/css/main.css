@@ -2,10 +2,6 @@ body {
     background-color: #f4f5eb;
 }
 
-.cursor-pointer {
-    cursor: pointer;
-}
-
 .center {
     position: absolute;
     top: 50%;
