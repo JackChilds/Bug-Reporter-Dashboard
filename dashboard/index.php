@@ -1,5 +1,7 @@
 <?php
 
+$bug_report_file;
+
 function readPreferences() {
     // open the preferences file and read from it, then parse as json
     $preferencesFile = fopen("preferences.json", "r");
@@ -7,26 +9,33 @@ function readPreferences() {
     fclose($preferencesFile);
     return json_decode($preferences, true);
 }
+$preferences = readPreferences();
 
-
-function processDetailHighlight($l) {
-    $regex = '/\{\{.*?\}\}/m'; // get double bracket with string inside
-    
-    // now check regex against $l
-    preg_match_all($regex, $l, $matches);
-
-    for ($i = 0; $i < count($matches); $i++) {
-
+if(!file_exists($_FILES['report']['tmp_name']) || !is_uploaded_file($_FILES['report']['tmp_name'])) {
+    header('Location: ' . $preferences['error']['file-not-sent']);
+} else {
+    // check if file is json
+    $file = fopen($_FILES['report']['tmp_name'], "r");
+    $fileContents = fread($file, filesize($_FILES['report']['tmp_name']));
+    fclose($file);
+    if(!json_decode($fileContents)) {
+        header('Location: ' . $preferences['error']['file-not-valid']);
+    } else {
+        $bug_report_file = base64_encode($fileContents);
     }
 }
-
-$preferences = readPreferences();
 
 ?>
 
 <!DOCTYPE html>
 <html lang="en">
 <head>
+    <!-- The Bug Report File -->
+    <script>
+        const bug_report_file = JSON.parse(atob('<?php echo $bug_report_file; ?>'));
+        
+    </script>
+
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">

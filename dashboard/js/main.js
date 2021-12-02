@@ -212,6 +212,8 @@ function bugreportChanged() {
     } else {
         bugreportViewer.querySelector('#additional-info-table-container').innerHTML = 'No additional information available in bug report';
     }
+
+    bugPropertyReplace();
 }
 
 function tableSearch(input, table) {
@@ -230,6 +232,16 @@ function tableSearch(input, table) {
     }
 }
 
+
+/*
+* This function gets all elements with the bug-property class, then modifies 
+* the element to replace bug report references with the respective values.
+* 
+* E.g. 
+* <span class="bug-property">User agent: {{ data.navigatorInfo.userAgent }}</span>
+* Becomes (value of bugreport.navigatorInfo.userAgent)
+* <span class="bug-reporter">User agent: Mozillla...</span>
+*/
 function bugPropertyReplace() {
     var bugProperties = document.querySelectorAll('.bug-property');
     const regex = /\{\{.*?\}\}/g;
@@ -254,9 +266,8 @@ function bugPropertyReplace() {
                     replacement = item;
                 }
 
-                e.innerHTML=e.innerHTML.replace(property[n], replacement);
+                e.innerHTML = e.innerHTML.replace(property[n], replacement);
             }
         }
     });
-
 }

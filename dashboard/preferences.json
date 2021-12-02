@@ -25,6 +25,10 @@
         "page-title": "Bug Report Viewer",
         "title-secondary-text": "By Jack Childs" 
     },
+    "error": {
+        "file-not-sent": "../test/?file-not-sent",
+        "file-not-valid": "../test/?file-not-valid"
+    },
     "advanced": {
         "detail-highlight": [
             "<b>User agent:</b> {{ data.navigatorInfo.userAgent }}<br><b>Screen width:</b> {{ data.screenInfo.width }}"
