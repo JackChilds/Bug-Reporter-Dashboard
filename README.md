@@ -47,3 +47,49 @@ To set error URLs edit the `error` section of the `preferences.json` file. URLS 
 
 - `file-not-sent`: this URL is navigated to when the `report` parameter is not sent
 - `file-not-valid`: this URL is navigated to when the `report` parameter is not a JSON file
+
+## Preferences file
+Below is the default preferences file designed to work with the setup in the `test/` directory.
+
+```json
+{
+    "css": [
+        "css/main.min.css"
+    ],
+    "js": [
+        "js/main.js"
+    ],  
+    "sweetalert2-theme": "https://cdn.jsdelivr.net/npm/@sweetalert2/theme-default@5.0.8/default.min.css",
+    "highlightjs-theme": "https://cdn.jsdelivr.net/npm/highlight.js@11.3.1/styles/base16/snazzy.css",
+    "fonts": [
+        "https://fonts.googleapis.com/css2?family=Roboto+Mono&display=swap"
+    ],
+    "body-style": {
+        "background-color": "#f4f5eb",
+        "color": "#000000",
+        "font-family": "Roboto, sans-serif",
+        "font-size": "1.2rem"
+    },
+    "preferences": {
+        "company-name": {
+            "text": "Company X",
+            "font-family": "Roboto, sans-serif",
+            "font-size": "1.5rem"
+        },
+        "page-title": "Bug Report Viewer",
+        "title-secondary-text": "By Jack Childs" 
+    },
+    "error": {
+        "file-not-sent": "../test/?file-not-sent",
+        "file-not-valid": "../test/?file-not-valid"
+    },
+    "advanced": {
+        "detail-highlight": [
+            "<b>User agent:</b> {{ data.navigatorInfo.userAgent }}<br><b>Screen width:</b> {{ data.screenInfo.width }}"
+        ]
+    }
+}
+```
+
+## License
+Apache License, version 2.0
