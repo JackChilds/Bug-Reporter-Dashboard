@@ -5,7 +5,7 @@ A flexible and customizable dashboard for [bug reporter](https://github.com/Jack
 To use this project, just copy the dashboard/ directory into your PHP server, then edit the `preferences.json` file to suit your needs.
 
 ### Notes
-- this project is designed to work in conjunction with [bug-reporter](https://JackChilds/Bug-Reporter).
+- this project is designed to work in conjunction with [bug reporter](https://github.com/JackChilds/Bug-Reporter).
 - if you don't have a PHP server, you may find it easier to use the dashboard in the [bug reporter](https://github.com/JackChilds/Bug-Reporter) project, however you won't be able to customize the dashboard with the `preferences.json` file and send files to the dashboard via POST requests.
 
 ## Advanced Options
