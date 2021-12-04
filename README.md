@@ -23,12 +23,25 @@ For reference to the properties in the bug report object, see the [bug reporter 
 ## Sending data to the dashboard through a POST request
 ```html
 <form action="path/to/dashboard/" method="post" enctype="multipart/form-data">
-    <!-- Suppress the alert when the bug report is loaded -->
     <input type="text" name="hide-alert" hidden>
-
-    <!-- Specify preferences.json file (as a url relative to location of dashboard file). If not specified, the dashboard will look for the preferences.json file in the same directory -->
     <input type="text" name="preferences" value="preferences.json" hidden>
-    <input type="file" name="report">
+
+    <input type="file" name="report" accept="application/JSON" required>
+
     <input type="submit" value="Go to dashboard">
 </form>
 ```
+### POST parameters
+**Note:** in order to submit a file to the server, you must ensure that `enctype` is set to `multipart/form-data`.
+
+- `report` (*required*): a JSON bug report file selected by the user. **Default:** none, an error will be thrown if `report` is not specified or of wrong file type, see error reporting section for more info
+- `hide-alert` (*optional*): when this parameter is sent to the dashboard, the alert saying that the bug report has loaded will be hidden. **Default:** alert is shown.
+- `preferences` (*optional*): specify the preferences JSON file (as a URL relative to location of dashboard file) that the dashboard should use to customize the experience. If not set the dashboard will look for the `preferences.json` file in the same directory specified directory. **Default:** not set, `preferences.json` is looked for in the dashboard directory.
+
+## Error reporting
+Currently, there are 2 errors that can be thrown to a URL (over GET). **Note:** you cannot get an error thrown to a URL when the preferences file is not available, instead the dashboard will throw an error saying `Preferences file not found` or `Custom preferences file not found`.
+
+To set error URLs edit the `error` section of the `preferences.json` file. URLS should be relative to the dashboard directory and in GET format.
+
+- `file-not-sent`: this URL is navigated to when the `report` parameter is not sent
+- `file-not-valid`: this URL is navigated to when the `report` parameter is not a JSON file
