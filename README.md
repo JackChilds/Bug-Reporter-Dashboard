@@ -34,7 +34,7 @@ For reference to the properties in the bug report object, see the [bug reporter 
 ### POST parameters
 **Note:** in order to submit a file to the server, you must ensure that `enctype` is set to `multipart/form-data`.
 
-- `report` (*required*): a JSON bug report file selected by the user. **Default:** none, an error will be thrown if `report` is not specified or of wrong file type, see error reporting section for more info
+- `report` (*required*): a JSON bug report file selected by the user. **Default:** none, an error will be thrown if wrong file type or not sent at all. See [error reporting](#error-reporting)
 - `hide-alert` (*optional*): when this parameter is sent to the dashboard, the alert saying that the bug report has loaded will be hidden. **Default:** alert is shown.
 - `preferences` (*optional*): specify the preferences JSON file (as a URL relative to location of dashboard file) that the dashboard should use to customize the experience. If not set the dashboard will look for the `preferences.json` file in the same directory specified directory. **Default:** not set, `preferences.json` is looked for in the dashboard directory.
 
