@@ -118,10 +118,12 @@ function bugreportChanged() {
     hljs.highlightElement(bugreportViewer.querySelector('#html-code'));
     bugreportViewer.querySelector('.dateTime').innerHTML = 'Created: <span class="text-muted">' + bugreport.dateTime + '</span>';
 
+    let table;
+
     if (bugreport.consoleOutput !== null) {
         bugreportViewer.querySelector('#console-log-table-container').innerHTML = '<input type="text" placeholder="Search console log..." class="form-control" onkeyup="tableSearch(this, document.querySelector(\'#console-log-table-container table\'))">';
 
-        var table = createTableFrom2dArray(bugreport.consoleOutput, ['Date/Time', 'Message', 'Log Type']);
+        table = createTableFrom2dArray(bugreport.consoleOutput, ['Date/Time', 'Message', 'Log Type']);
         bugreportViewer.querySelector('#console-log-table-container').appendChild(table);
     } else {
         bugreportViewer.querySelector('#console-log-table-container').innerHTML = 'No console log data available in this bug report';
@@ -129,7 +131,7 @@ function bugreportChanged() {
 
     if (bugreport.cookies !== null && Object.keys(bugreport.cookies).length !== 0) {
         bugreportViewer.querySelector('#cookies-table-container').innerHTML = '<input type="text" placeholder="Search cookies..." class="form-control" onkeyup="tableSearch(this, document.querySelector(\'#cookies-table-container table\'))">';
-        var table = createTableFromObject(bugreport.cookies, ['Name', 'Value']);
+        table = createTableFromObject(bugreport.cookies, ['Name', 'Value']);
         bugreportViewer.querySelector('#cookies-table-container').appendChild(table);
     } else {
         bugreportViewer.querySelector('#cookies-table-container').innerHTML = 'No cookie data available in this bug report';
@@ -138,7 +140,7 @@ function bugreportChanged() {
     if (bugreport.localStorage !== null && Object.keys(bugreport.localStorage).length !== 0) {
         bugreportViewer.querySelector('#local-storage-table-container').innerHTML = '<input type="text" placeholder="Search local storage..." class="form-control" onkeyup="tableSearch(this, document.querySelector(\'#local-storage-table-container table\'))">';
 
-        var table = createTableFromObject(bugreport.localStorage, ['Name', 'Value']);
+        table = createTableFromObject(bugreport.localStorage, ['Name', 'Value']);
         bugreportViewer.querySelector('#local-storage-table-container').appendChild(table);
     } else {
         bugreportViewer.querySelector('#local-storage-table-container').innerHTML = 'No local storage data available in this bug report';
@@ -147,21 +149,21 @@ function bugreportChanged() {
     if (bugreport.sessionStorage !== null && Object.keys(bugreport.sessionStorage).length !== 0) {
         bugreportViewer.querySelector('#session-storage-table-container').innerHTML = '<input type="text" placeholder="Search session storage..." class="form-control" onkeyup="tableSearch(this, document.querySelector(\'#session-storage-table-container table\'))">';
 
-        var table = createTableFromObject(bugreport.sessionStorage, ['Name', 'Value']);
+        table = createTableFromObject(bugreport.sessionStorage, ['Name', 'Value']);
         bugreportViewer.querySelector('#session-storage-table-container').appendChild(table);
     } else {
         bugreportViewer.querySelector('#session-storage-table-container').innerHTML = 'No session storage data available in bug report';
     }
 
     if (bugreport.navigatorInfo !== null && Object.keys(bugreport.navigatorInfo).length !== 0) {
-        var table = createTableFromObject(bugreport.navigatorInfo, ['Property Name', 'Value']);
+        table = createTableFromObject(bugreport.navigatorInfo, ['Property Name', 'Value']);
         bugreportViewer.querySelector('#navigator-info-table-container').appendChild(table);
     } else {
         bugreportViewer.querySelector('#navigator-info-table-container').innerHTML = 'No navigator information available in bug report';
     }
 
     if (bugreport.screenInfo !== null && Object.keys(bugreport.screenInfo).length !== 0) {
-        var table = createTableFromObject(bugreport.screenInfo, ['Property Name', 'Value']);
+        table = createTableFromObject(bugreport.screenInfo, ['Property Name', 'Value']);
         bugreportViewer.querySelector('#screen-info-table-container').appendChild(table);
     } else {
         bugreportViewer.querySelector('#screen-info-table-container').innerHTML = 'No screen information available in bug report';
@@ -169,7 +171,7 @@ function bugreportChanged() {
 
     if (bugreport.additionalInfo !== null && bugreport.additionalInfo.length !== 0) {
         bugreportViewer.querySelector('#additional-info-table-container').innerHTML = '<input type="text" placeholder="Search additional information..." class="form-control" onkeyup="tableSearch(this, document.querySelector(\'#additional-info-table-container table\'))">';
-        var table = createTableFrom2dArray(bugreport.additionalInfo, ['Property Name', 'Value'], true);
+        table = createTableFrom2dArray(bugreport.additionalInfo, ['Property Name', 'Value'], true);
         bugreportViewer.querySelector('#additional-info-table-container').appendChild(table);
     } else {
         bugreportViewer.querySelector('#additional-info-table-container').innerHTML = 'No additional information available in bug report';
